@@ -1,5 +1,5 @@
 # =========================
-# 1. Build Angular (SSG)
+# 1. Build Angular
 # =========================
 FROM node:22-alpine AS build
 
@@ -16,21 +16,17 @@ RUN npm run build
 # =========================
 FROM nginx:alpine
 
-# Puerto explícito (solo informativo, Nginx igual escucha en este)
+# Puerto explícito
 EXPOSE 80
 
-# Borramos config y html por defecto
+# Limpiar default
 RUN rm -rf /usr/share/nginx/html/* \
     && rm -f /etc/nginx/conf.d/default.conf
 
-# Config Nginx explícita (puerto visible)
+# Configuración Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# AJUSTA esta ruta al dist real
-# Ejemplos válidos:
-# /app/dist/banco-papel
-# /app/dist/banco-papel/browser
-COPY --from=build /app/dist/banco-papel/browser /usr/share/nginx/html
+# 👉 RUTA REAL DEL DIST (confirmada por logs)
+COPY --from=build /app/dist/bancodepapel /usr/share/nginx/html
 
-# Arranque visible en logs
 CMD ["nginx", "-g", "daemon off;"]
