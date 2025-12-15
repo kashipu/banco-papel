@@ -1,5 +1,5 @@
 # =========================
-# 1. Build Angular
+# 1. Build Angular (SSR)
 # =========================
 FROM node:22-alpine AS build
 
@@ -12,21 +12,20 @@ COPY . .
 RUN npm run build
 
 # =========================
-# 2. Runtime Nginx
+# 2. Runtime Nginx (browser)
 # =========================
 FROM nginx:alpine
 
-# Puerto explícito
 EXPOSE 80
 
-# Limpiar default
+# Limpiar defaults
 RUN rm -rf /usr/share/nginx/html/* \
     && rm -f /etc/nginx/conf.d/default.conf
 
-# Configuración Nginx
+# Config Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# 👉 RUTA REAL DEL DIST (confirmada por logs)
-COPY --from=build /app/dist/bancodepapel /usr/share/nginx/html
+# ⚠️ CLAVE: copiar CONTENIDO de browser
+COPY --from=build /app/dist/bancodepapel/browser/ /usr/share/nginx/html/
 
 CMD ["nginx", "-g", "daemon off;"]
