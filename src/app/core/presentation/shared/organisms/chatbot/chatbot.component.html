@@ -4,6 +4,7 @@
     (click)="toggleChat()"
     class="fixed bottom-6 right-6 w-14 h-14 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors z-50 flex items-center justify-center"
     aria-label="Abrir chat"
+    id="chatbot-button"
   >
     <svg
       class="w-6 h-6"
@@ -25,7 +26,7 @@
 <!-- Ventana de chat -->
 @if (isOpen()) {
   <div
-    class="fixed bottom-6 right-6 w-96 h-[600px] bg-white rounded-lg shadow-2xl flex flex-col z-50 border border-gray-200"
+    class="fixed bottom-6 right-6 w-96 h-[600px] bg-white rounded-lg shadow-2xl flex flex-col z-claude50 border border-gray-200"
   >
     <!-- Header del chat -->
     <div class="flex items-center justify-between p-4 border-b border-gray-200 bg-blue-600 text-white rounded-t-lg">
@@ -37,6 +38,7 @@
         (click)="toggleChat()"
         class="text-white hover:text-gray-200 focus:outline-none"
         aria-label="Cerrar chat"
+        id="chatbot-close-button"
       >
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
