@@ -1,0 +1,57 @@
+<div class="space-y-6">
+  <div>
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Mis Tarjetas</h1>
+    <p class="text-gray-600">Gestiona tus tarjetas de débito y crédito</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="flex justify-center items-center py-12">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    @if (cards().length > 0) {
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        @for (card of cards(); track card.id) {
+          <app-card>
+            <div class="space-y-4">
+              <div class="flex justify-between items-start">
+                <div>
+                  <h3 class="text-lg font-semibold text-gray-900">{{ getCardBrandLabel(card.brand) }}</h3>
+                  <p class="text-sm text-gray-600">{{ getCardTypeLabel(card.type) }}</p>
+                </div>
+                <app-badge [variant]="getStatusVariant(card.status)">
+                  {{ getStatusLabel(card.status) }}
+                </app-badge>
+              </div>
+
+              <div>
+                <p class="text-2xl font-mono font-bold text-gray-900 mb-2">
+                  {{ maskCardNumber(card.cardNumber) }}
+                </p>
+                <p class="text-sm text-gray-600">{{ card.cardHolderName }}</p>
+              </div>
+
+              <div class="flex justify-between text-sm text-gray-600">
+                <div>
+                  <p class="text-xs text-gray-500">Válida hasta</p>
+                  <p class="font-medium">{{ card.expiryMonth }}/{{ card.expiryYear }}</p>
+                </div>
+                @if (card.dailyLimit) {
+                  <div>
+                    <p class="text-xs text-gray-500">Límite diario</p>
+                    <p class="font-medium">${{ card.dailyLimit }}</p>
+                  </div>
+                }
+              </div>
+            </div>
+          </app-card>
+        }
+      </div>
+    } @else {
+      <div class="text-center py-12">
+        <p class="text-gray-500">No tienes tarjetas disponibles</p>
+      </div>
+    }
+  }
+</div>
+

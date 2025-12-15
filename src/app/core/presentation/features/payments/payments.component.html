@@ -1,0 +1,110 @@
+<div class="space-y-6">
+  <div>
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Pagos</h1>
+    <p class="text-gray-600">Paga tus servicios de forma rápida y segura</p>
+  </div>
+
+  <div class="max-w-2xl">
+    <app-card>
+      @if (success()) {
+        <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4" role="alert">
+          Pago realizado exitosamente. Redirigiendo...
+        </div>
+      }
+
+      @if (error(); as errorMessage) {
+        <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4" role="alert">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        <div>
+          <label for="accountId" class="block text-sm font-medium text-gray-700 mb-1">
+            Cuenta <span class="text-red-500">*</span>
+          </label>
+          <select
+            id="accountId"
+            formControlName="accountId"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            @for (account of accounts(); track account.id) {
+              <option [value]="account.id">
+                {{ account.accountNumber }} - {{ account.accountType === 'checking' ? 'Corriente' : 'Ahorros' }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <div>
+          <label for="serviceProvider" class="block text-sm font-medium text-gray-700 mb-1">
+            Proveedor de Servicio <span class="text-red-500">*</span>
+          </label>
+          <select
+            id="serviceProvider"
+            formControlName="serviceProvider"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            <option value="">Selecciona un proveedor</option>
+            @for (provider of serviceProviders; track provider.id) {
+              <option [value]="provider.id">{{ provider.name }}</option>
+            }
+          </select>
+        </div>
+
+        <div>
+          <app-label for="serviceId" [required]="true">Número de Servicio</app-label>
+          <app-input
+            id="serviceId"
+            name="serviceId"
+            type="text"
+            placeholder="123456789"
+            formControlName="serviceId"
+            [required]="true"
+          />
+        </div>
+
+        <div>
+          <app-label for="amount" [required]="true">Monto</app-label>
+          <app-input
+            id="amount"
+            name="amount"
+            type="number"
+            placeholder="0.00"
+            formControlName="amount"
+            [required]="true"
+          />
+        </div>
+
+        <div>
+          <app-label for="description" [required]="true">Descripción</app-label>
+          <app-input
+            id="description"
+            name="description"
+            type="text"
+            placeholder="Descripción del pago"
+            formControlName="description"
+            [required]="true"
+          />
+        </div>
+
+        <app-button
+          type="submit"
+          variant="primary"
+          size="lg"
+          [disabled]="isLoading() || paymentForm.invalid"
+          [fullWidth]="true"
+          (clicked)="onSubmit()"
+        >
+          @if (isLoading()) {
+            <app-spinner size="sm" />
+            <span class="ml-2">Procesando...</span>
+          } @else {
+            Realizar Pago
+          }
+        </app-button>
+      </form>
+    </app-card>
+  </div>
+</div>
+

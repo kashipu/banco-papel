@@ -1,0 +1,12 @@
+<div class="space-y-0">
+  @if (transactions().length > 0) {
+    @for (transaction of transactions(); track transaction.id) {
+      <app-transaction-item [transaction]="transaction" />
+    }
+  } @else {
+    <div class="text-center py-8 text-gray-500">
+      <p>{{ emptyMessage() }}</p>
+    </div>
+  }
+</div>
+

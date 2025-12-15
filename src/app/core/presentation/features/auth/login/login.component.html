@@ -1,0 +1,64 @@
+<app-card>
+  <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Iniciar Sesión</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+    @if (error(); as errorMessage) {
+      <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg" role="alert">
+        {{ errorMessage }}
+      </div>
+    }
+
+    <div class="mb-4">
+      <app-label for="email" [required]="true">Email</app-label>
+      <app-input
+        id="email"
+        name="email"
+        type="email"
+        placeholder="Email"
+        formControlName="email"
+        [required]="true"
+      />
+      @if (emailError) {
+        <p class="mt-1 text-sm text-red-600" role="alert">{{ emailError }}</p>
+      }
+    </div>
+
+    <div class="mb-4">
+      <app-label for="password" [required]="true">Contraseña</app-label>
+      <app-input
+        id="password"
+        name="password"
+        type="password"
+        placeholder="Contraseña"
+        formControlName="password"
+        [required]="true"
+      />
+      @if (passwordError) {
+        <p class="mt-1 text-sm text-red-600" role="alert">{{ passwordError }}</p>
+      }
+    </div>
+
+    <app-button
+      type="submit"
+      variant="primary"
+      size="lg"
+      [disabled]="isLoading() || loginForm.invalid"
+      [fullWidth]="true"
+      (clicked)="onSubmit()"
+    >
+      @if (isLoading()) {
+        <app-spinner size="sm" />
+        <span class="ml-2">Iniciando sesión...</span>
+      } @else {
+        Iniciar Sesión
+      }
+    </app-button>
+  </form>
+
+  <div class="mt-6 text-center text-sm text-gray-600">
+    <p>Credenciales de prueba:</p>
+    <p class="font-mono mt-1">Email: usuario@banco.com</p>
+    <p class="font-mono">Contraseña: password123</p>
+  </div>
+</app-card>
+

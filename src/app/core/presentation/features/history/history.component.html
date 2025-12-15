@@ -1,0 +1,28 @@
+<div class="space-y-6">
+  <div>
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Historial de Transacciones</h1>
+    <p class="text-gray-600">Consulta todas tus transacciones</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="flex justify-center items-center py-12">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    <div class="mb-4">
+      <app-search-bar
+        placeholder="Buscar por descripción, tipo, cuenta o referencia..."
+        [value]="searchTerm()"
+        (searchChanged)="onSearchChange($event)"
+      />
+    </div>
+
+    <app-card>
+      <app-transaction-list
+        [transactions]="filteredTransactions()"
+        [emptyMessage]="searchTerm() ? 'No se encontraron transacciones' : 'No hay transacciones disponibles'"
+      />
+    </app-card>
+  }
+</div>
+

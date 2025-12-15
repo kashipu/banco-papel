@@ -1,0 +1,34 @@
+<div class="mb-4">
+  @if (label()) {
+    <app-label [for]="id()" [required]="required()">
+      {{ label() }}
+    </app-label>
+  }
+  @if (formControlName; as controlName) {
+    <input
+      [id]="id()"
+      [name]="name()"
+      [type]="type()"
+      [placeholder]="placeholder()"
+      [required]="required()"
+      [disabled]="disabled()"
+      [formControlName]="controlName"
+      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
+    />
+  } @else {
+    <app-input
+      [id]="id()"
+      [name]="name()"
+      [type]="type()"
+      [placeholder]="placeholder()"
+      [required]="required()"
+      [disabledInput]="disabled()"
+    />
+  }
+  @if (error()) {
+    <p class="mt-1 text-sm text-red-600" role="alert">
+      {{ error() }}
+    </p>
+  }
+</div>
+

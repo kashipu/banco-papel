@@ -1,0 +1,22 @@
+<aside class="w-64 bg-gray-50 border-r border-gray-200 min-h-screen">
+  <nav class="p-4">
+    <ul class="space-y-2">
+      @for (item of menuItems; track item.route) {
+        <li>
+          <a
+            [routerLink]="item.route"
+            routerLinkActive="bg-blue-600 text-white"
+            [routerLinkActiveOptions]="{ exact: false }"
+            class="flex items-center gap-3 px-4 py-2 rounded-lg text-gray-700 hover:bg-gray-200 transition-colors"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" [attr.d]="item.icon" />
+            </svg>
+            <span>{{ item.label }}</span>
+          </a>
+        </li>
+      }
+    </ul>
+  </nav>
+</aside>
+

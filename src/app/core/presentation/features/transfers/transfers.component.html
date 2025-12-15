@@ -1,0 +1,107 @@
+<div class="space-y-6">
+  <div>
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Transferencias</h1>
+    <p class="text-gray-600">Realiza transferencias a otras cuentas</p>
+  </div>
+
+  <div class="max-w-2xl">
+    <app-card>
+      @if (success()) {
+        <div class="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-4" role="alert">
+          Transferencia realizada exitosamente. Redirigiendo...
+        </div>
+      }
+
+      @if (error(); as errorMessage) {
+        <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4" role="alert">
+          {{ errorMessage }}
+        </div>
+      }
+
+      <form [formGroup]="transferForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        <div>
+          <label for="fromAccountId" class="block text-sm font-medium text-gray-700 mb-1">
+            Cuenta de Origen <span class="text-red-500">*</span>
+          </label>
+          <select
+            id="fromAccountId"
+            formControlName="fromAccountId"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            @for (account of accounts(); track account.id) {
+              <option [value]="account.id">
+                {{ account.accountNumber }} - {{ account.accountType === 'checking' ? 'Corriente' : 'Ahorros' }}
+                ({{ account.balance | currency: account.currency : 'symbol' : '1.2-2' }})
+              </option>
+            }
+          </select>
+          @if (fromAccountError) {
+            <p class="mt-1 text-sm text-red-600" role="alert">{{ fromAccountError }}</p>
+          }
+        </div>
+
+        <div>
+          <app-label for="toAccountNumber" [required]="true">Número de Cuenta Destino</app-label>
+          <app-input
+            id="toAccountNumber"
+            name="toAccountNumber"
+            type="text"
+            placeholder="1234567890"
+            formControlName="toAccountNumber"
+            [required]="true"
+          />
+          @if (toAccountError) {
+            <p class="mt-1 text-sm text-red-600" role="alert">{{ toAccountError }}</p>
+          }
+        </div>
+
+        <div>
+          <app-label for="amount" [required]="true">Monto</app-label>
+          <app-input
+            id="amount"
+            name="amount"
+            type="number"
+            placeholder="0.00"
+            formControlName="amount"
+            [required]="true"
+          />
+          @if (amountError) {
+            <p class="mt-1 text-sm text-red-600" role="alert">{{ amountError }}</p>
+          }
+        </div>
+
+        <div>
+          <app-label for="description" [required]="true">Descripción</app-label>
+          <app-input
+            id="description"
+            name="description"
+            type="text"
+            placeholder="Descripción de la transferencia"
+            formControlName="description"
+            [required]="true"
+          />
+          @if (descriptionError) {
+            <p class="mt-1 text-sm text-red-600" role="alert">{{ descriptionError }}</p>
+          }
+        </div>
+
+        <app-button
+          type="submit"
+          variant="primary"
+          size="lg"
+          [disabled]="isLoading() || transferForm.invalid"
+          [fullWidth]="true"
+          (clicked)="onSubmit()"
+        >
+          @if (isLoading()) {
+            <app-spinner size="sm" />
+            <span class="ml-2">Procesando...</span>
+          } @else {
+            Realizar Transferencia
+          }
+        </app-button>
+      </form>
+    </app-card>
+  </div>
+</div>
+

@@ -1,0 +1,80 @@
+<div class="space-y-6">
+  <div>
+    <h1 class="text-3xl font-bold text-gray-900 mb-2">Dashboard</h1>
+    <p class="text-gray-600">Resumen de tus cuentas y transacciones</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="flex justify-center items-center py-12">
+      <app-spinner size="lg" />
+    </div>
+  } @else {
+    <!-- Balance Total -->
+    <app-card>
+      <div class="text-center">
+        <h2 class="text-sm font-medium text-gray-500 mb-2">Balance Total</h2>
+        <p class="text-4xl font-bold text-gray-900">
+          {{ totalBalance | currency: 'USD' : 'symbol' : '1.2-2' }}
+        </p>
+      </div>
+    </app-card>
+
+    <!-- Cuentas -->
+    <div>
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold text-gray-900">Mis Cuentas</h2>
+        <app-button variant="outline" size="sm" [routerLink]="['/accounts']">
+          Ver todas
+        </app-button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        @for (account of accounts(); track account.id) {
+          <app-account-card [account]="account" />
+        }
+      </div>
+    </div>
+
+    <!-- Últimas Transacciones -->
+    <div>
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-semibold text-gray-900">Últimas Transacciones</h2>
+        <app-button variant="outline" size="sm" [routerLink]="['/history']">
+          Ver historial completo
+        </app-button>
+      </div>
+      <app-card>
+        <app-transaction-list [transactions]="transactions()" />
+      </app-card>
+    </div>
+
+    <!-- Accesos Rápidos -->
+    <div>
+      <h2 class="text-xl font-semibold text-gray-900 mb-4">Accesos Rápidos</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <app-card>
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="font-semibold text-gray-900 mb-1">Transferencias</h3>
+              <p class="text-sm text-gray-600">Realiza una transferencia</p>
+            </div>
+            <app-button variant="primary" [routerLink]="['/transfers']">
+              Transferir
+            </app-button>
+          </div>
+        </app-card>
+        <app-card>
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="font-semibold text-gray-900 mb-1">Pagos</h3>
+              <p class="text-sm text-gray-600">Paga tus servicios</p>
+            </div>
+            <app-button variant="primary" [routerLink]="['/payments']">
+              Pagar
+            </app-button>
+          </div>
+        </app-card>
+      </div>
+    </div>
+  }
+</div>
+

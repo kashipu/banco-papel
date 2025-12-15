@@ -1,0 +1,20 @@
+<header class="bg-white shadow-sm border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex justify-between items-center h-16">
+      <div class="flex items-center">
+        <h1 class="text-2xl font-bold text-blue-600">Banco de Papel</h1>
+      </div>
+      <nav class="flex items-center gap-4">
+        @if (isAuthenticated(); as authenticated) {
+          <span class="text-sm text-gray-700">
+            {{ user()?.firstName }} {{ user()?.lastName }}
+          </span>
+          <app-button variant="outline" size="sm" (clicked)="logout()">
+            Cerrar Sesión
+          </app-button>
+        }
+      </nav>
+    </div>
+  </div>
+</header>
+
