@@ -1,0 +1,54 @@
+<div class="min-h-screen bg-gray-50">
+  <!-- Header -->
+  <header class="bg-white shadow-sm border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center">
+          <h1 class="text-2xl font-bold text-blue-600">Banco de Papel</h1>
+        </div>
+        <nav>
+          <app-button variant="primary" size="md" [routerLink]="['/auth/login']">
+            Iniciar Sesión
+          </app-button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center">
+      <h2 class="text-4xl font-bold text-gray-900 mb-4">
+        Bienvenido a Banco de Papel
+      </h2>
+      <p class="text-xl text-gray-600 mb-8">
+        Tu banco ficticio de confianza. Gestiona tus finanzas de manera fácil y segura.
+      </p>
+      <div class="flex justify-center gap-4">
+        <app-button variant="primary" size="lg" [routerLink]="['/auth/login']">
+          Acceder a mi cuenta
+        </app-button>
+      </div>
+    </div>
+
+    <!-- Features Section -->
+    <div class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">Transferencias</h3>
+        <p class="text-gray-600">Realiza transferencias rápidas y seguras a otras cuentas.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">Pagos</h3>
+        <p class="text-gray-600">Paga tus servicios de forma fácil y desde cualquier lugar.</p>
+      </div>
+      <div class="bg-white p-6 rounded-lg shadow-md">
+        <h3 class="text-xl font-semibold text-gray-900 mb-2">Control Total</h3>
+        <p class="text-gray-600">Consulta tu historial y gestiona todas tus cuentas en un solo lugar.</p>
+      </div>
+    </div>
+  </main>
+
+  <!-- Chatbot -->
+  <app-chatbot />
+</div>
+
